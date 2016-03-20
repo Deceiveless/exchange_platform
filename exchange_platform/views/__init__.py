@@ -18,8 +18,7 @@ class TemplateViewMixin(TemplateView):
     def _render_response(self, request, response):
         if request.META.get('CONTENT_TYPE') == 'application/json':
             return response
-
-        print(response.data)
+        # return response
         return self.render_to_response(response.data)
 
     def list(self, request, *args, **kwargs):
@@ -43,11 +42,12 @@ class SparePartView(TemplateViewMixin, ListOrCreateViewSet):
     """
     API endpoint that allows spare parts to be viewed or created.
     """
-    template_name = 'stats2.html'
+    template_name = 'create.html'
     serializer_class = SparePartSerializer
     queryset = SparePart.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = SparePartFilter
+    ordering = ('-dt_created', 'name',)
     # filter_fields = ('name', 'model')
 
 
@@ -55,11 +55,11 @@ class ModelStatisticsView(TemplateViewMixin, ListViewSet):
     """
     API endpoint that allows statistics to be viewed.
     """
-    MIN_STATS_COUNT = 1
-    template_name = 'stats2.html'
+    MIN_STATS_COUNT = 5
+    template_name = 'statistics.html'
     serializer_class = ModelSerializer
     queryset = SparePart.objects.values('model'
                                         ).annotate(details_count=models.Count('name')
-                                                   ).filter(details_count__gte=MIN_STATS_COUNT
+                                                   ).filter(details_count__gt=MIN_STATS_COUNT
                                                             ).order_by('-details_count')
 
