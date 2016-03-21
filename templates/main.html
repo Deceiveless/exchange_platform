@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Filter</span>
+    <div style='padding: 0 40px;'>
+        <form id="js-filter-form" action="/spare-part/" method="GET">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ query.name }}">
+                <label class="mdl-textfield__label" for="name">Name</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="model" name="model" value="{{ query.model }}">
+                <label class="mdl-textfield__label" for="model">Model</label>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect js-action-search">
+                Search
+            </button>
+        </form>
+    </div>
+</div>
+    <main class="mdl-layout__content">
+        <div class="mdl-grid">
+            {% if count %}
+                <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col">
+                    <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Name</th>
+                        <th class="mdl-data-table__cell--non-numeric">Model</th>
+                        <th>Price</th>
+                        <th class="mdl-data-table__cell--non-numeric">Contacts</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for spare_part in results %}
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">{{ spare_part.name }}</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{ spare_part.model }}</td>
+                            <td>{% if spare_part.price %}{{ spare_part.price }}${% endif %}</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{ spare_part.contacts }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% include 'pagination.html' %}
+            {% endif %}
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position: fixed; bottom:40px; right: 40px;">
+                <i class="material-icons">add</i>
+            </button>
+        </div>
+    </main>
+
+{% endblock %}

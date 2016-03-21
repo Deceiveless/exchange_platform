@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-{% for stats_row in detail_stats %}
-    <div class="panel">
-        <div class="panel-heading clearfix">
-            <div class="pull-right">{{ stats_row.model }}</div>
-            <div class="panel-title">{{ stats_row.detail_count }}</div>
-        </div>
+{% extends "base.html" %}
+
+{% block content %}
+<main class="mdl-layout__content">
+    <div class="mdl-grid">
+        {% if count %}
+            <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Model</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats in results %}
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">{{ stats.model }}</td>
+                        <td>{{ stats.details_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include 'pagination.html' %}
+        {% endif %}
     </div>
-{% endfor %}
-</body>
-</html>
+</main>
+{% endblock %}

@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from ..models import SparePart
 from .serializers import *
 from .filter import SparePartFilter
+from rest_framework.renderers import TemplateHTMLRenderer
 
 __author__ = 'anna'
 
@@ -18,8 +19,10 @@ class TemplateViewMixin(TemplateView):
     def _render_response(self, request, response):
         if request.META.get('CONTENT_TYPE') == 'application/json':
             return response
-        # return response
-        return self.render_to_response(response.data)
+        context = dict(response.data)
+        context.update(query=request.query_params)
+        print context
+        return self.render_to_response(context)
 
     def list(self, request, *args, **kwargs):
         response = super(TemplateViewMixin, self).list(request, *args, **kwargs)
@@ -42,7 +45,7 @@ class SparePartView(TemplateViewMixin, ListOrCreateViewSet):
     """
     API endpoint that allows spare parts to be viewed or created.
     """
-    template_name = 'create.html'
+    template_name = 'main.html'
     serializer_class = SparePartSerializer
     queryset = SparePart.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
@@ -57,7 +60,7 @@ class ModelStatisticsView(TemplateViewMixin, ListViewSet):
     """
     MIN_STATS_COUNT = 5
     template_name = 'statistics.html'
-    serializer_class = ModelSerializer
+    serializer_class = StatsModelSerializer
     queryset = SparePart.objects.values('model'
                                         ).annotate(details_count=models.Count('name')
                                                    ).filter(details_count__gt=MIN_STATS_COUNT

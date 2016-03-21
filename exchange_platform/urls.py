@@ -18,7 +18,8 @@ from django.contrib import admin
 from rest_framework import routers
 from . import views
 from django.conf import settings
-from django.views.static import serve
+from django.conf.urls.static import static
+
 
 api_router = routers.DefaultRouter()
 web_router = routers.DefaultRouter()
@@ -28,7 +29,7 @@ for router in [api_router, web_router]:
 
 urlpatterns = [
    url(r'^api/', include(api_router.urls)),
+   url(r'^$', views.SparePartView.as_view({'get': 'list'})),
+   # url(r'^{}(?P<path>.*)$'.format(settings.STATIC_URL[1:]), serve, dict(insecure=True)),
    url(r'^', include(web_router.urls)),
-   # url(r'^%s(?P<path>.*)$' % settings.STATIC_URL[1:], serve, dict(insecure=True)),
-]
-
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
