@@ -30,4 +30,3 @@ class SparePartTest(TestCase):
         SparePart.objects.all().filter(name='Rudder').delete()
         spare_parts = SparePart.objects.all()
         self.assertEqual(len(spare_parts), 2)
-
