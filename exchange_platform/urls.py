@@ -14,22 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
 from rest_framework import routers
-from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .spare_part import views as spare_part_views
+from .statistics import views as statistics_views
+
 
 api_router = routers.DefaultRouter()
-web_router = routers.DefaultRouter()
-for router in [api_router, web_router]:
-    router.register(r'spare-part', views.SparePartView)
-    router.register(r'model-stats', views.ModelStatisticsView)
+api_router.register(r'spare-parts', spare_part_views.APIView)
+api_router.register(r'model-stats', statistics_views.APIView)
 
 urlpatterns = [
    url(r'^api/', include(api_router.urls)),
-   url(r'^$', views.SparePartView.as_view({'get': 'list'})),
-   # url(r'^{}(?P<path>.*)$'.format(settings.STATIC_URL[1:]), serve, dict(insecure=True)),
-   url(r'^', include(web_router.urls)),
+
+   url(r'^spare-part/?$', spare_part_views.FormView.as_view()),
+   url(r'^spare-parts/?$', spare_part_views.ListView.as_view()),
+   url(r'^model-stats/?$', statistics_views.ListView.as_view()),
+   url(r'^$', spare_part_views.ListView.as_view()),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,1 +1,39 @@
-<div class="mdk-pagination"></div>
+<div class="mdl-pagination-container">
+    <div class="mdl-pagination">
+      {% if pagination.previous_url %}
+        <span>
+          <a href="{{ pagination.previous_url }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </span>
+      {% else %}
+        <span aria-hidden="true" aria-label="Previous">&laquo;</span>
+      {% endif %}
+
+      {% for page_link in pagination.page_links %}
+        {% if page_link.is_break %}
+          <span aria-hidden="true">&hellip;</span>
+        {% else %}
+          {% if page_link.is_active %}
+            <span class="active">
+              <a href="{{ page_link.url }}">{{ page_link.number }}</a>
+            </span>
+          {% else %}
+            <span>
+              <a href="{{ page_link.url }}">{{ page_link.number }}</a>
+            </span>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% if pagination.next_url %}
+        <span>
+          <a href="{{ pagination.next_url }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </span>
+      {% else %}
+        <span aria-hidden="true" aria-label="Next">&raquo;</span>
+      {% endif %}
+    </div>
+</div>

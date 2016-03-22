@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}  
 
-</body>
-</html>
+{% block content %} 
+<main class="mdl-layout__content">
+        <div class="mdl-card mdl-shadow--2dp" style="margin: 40px auto; padding: 0 40px 40px 40px;">
+            <div class="mdl-card__title mdl-card--expand"><h4>Add detail</h4></div>
+            <form action="/spare-part/" method="POST">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if errors.name %}is-invalid{% endif %}">
+                    <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ data.name }}">
+                    <label class="mdl-textfield__label" for="name">Name*</label>
+                    <span class="mdl-textfield__error">{{ errors.name |join:" " }}</span>
+                </div><br>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if errors.model %}is-invalid{% endif %}">
+                    <input class="mdl-textfield__input" type="text" id="model" name="model" value="{{ data.model }}">
+                    <label class="mdl-textfield__label" for="model">Model*</label>
+                    <span class="mdl-textfield__error">{{ errors.model |join:" " }}</span>
+                </div><br>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if errors.price %}is-invalid{% endif %}">
+                    <input class="mdl-textfield__input" type="text" id="price" name="price" value="{{ data.price }}">
+                    <label class="mdl-textfield__label" for="price">Price</label>
+                    <span class="mdl-textfield__error">{{ errors.price |join:" " }}</span>
+                </div><br>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {% if errors.contacts %}is-invalid{% endif %}">
+                    <input class="mdl-textfield__input" type="text" id="contacts" name="contacts" value="{{ data.contacts }}">
+                    <label class="mdl-textfield__label" for="contacts">Contacts*</label>
+                    <span class="mdl-textfield__error">{{ errors.contacts |join:" " }}</span>
+                </div><br>
+
+                {% csrf_token %}
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="float: right">
+                    Add
+                </button>
+            </form>
+        </div>
+    </main>
+  {% endblock %}

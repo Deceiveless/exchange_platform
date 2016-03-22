@@ -5,8 +5,12 @@
 $(document).ready(function(){
    $('.js-action-search').click(function(){
       $( "#js-filter-form" ).submit();
-
+      return;
    });
-   console.log('test')
+   //
+   //$('.js-show-add-form').click(function(){
+   //   window.location.href = "http://stackoverflow.com";
+   //});
+
 
 });

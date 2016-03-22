@@ -1,0 +1,52 @@
+.mdl-pagination-container {
+    display:flex;
+    width:100%;
+    justify-content: center;
+    /*flex-grow: 1;*/
+}
+.mdl-pagination{
+    font-size: 14px;
+    text-align: center;
+}
+
+.mdl-pagination span{
+    height: 30px;
+    width: 30px;
+    color: rgba(0,0,0,.5);
+    transition: color 2s;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 30px;
+}
+.mdl-pagination span.active{
+    background: rgb(63,81,181);
+    border-radius: 50%;
+    color: white;
+}
+
+.mdl-pagination span.active a{
+    color: white;
+    text-decoration: none;
+}
+
+.mdl-pagination span a{
+    color: black;
+    text-decoration: none;
+}
+
+.mdl-pagination span.active a:hover{
+    color: white;
+    text-decoration: none;
+}
+.mdl-pagination span a:hover{
+    color: rgba(0,0,0,1);
+    transition: color 2s;
+    text-decoration: none;
+}
+.mdl-pagination span:first-child{
+    margin-left: 10px;
+}
+.mdl-pagination span:last-child{
+    margin-right: 10px;
+}
+

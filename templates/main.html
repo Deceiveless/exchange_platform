@@ -4,7 +4,7 @@
 <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Filter</span>
     <div style='padding: 0 40px;'>
-        <form id="js-filter-form" action="/spare-part/" method="GET">
+        <form id="js-filter-form" action="" method="GET">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ query.name }}">
                 <label class="mdl-textfield__label" for="name">Name</label>
@@ -45,9 +45,9 @@
                 </table>
                 {% include 'pagination.html' %}
             {% endif %}
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="position: fixed; bottom:40px; right: 40px;">
+            <a href="/spare-part/"><button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored js-show-add-form" style="position: fixed; bottom:40px; right: 40px;">
                 <i class="material-icons">add</i>
-            </button>
+            </button></a>
         </div>
     </main>
 
